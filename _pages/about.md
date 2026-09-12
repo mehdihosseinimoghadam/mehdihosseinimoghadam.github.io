@@ -1,74 +1,48 @@
 ---
 permalink: /
-title: "About Me"
-excerpt: "About me"
-author_profile: true
-redirect_from: 
-  - /about/
-  - /about.html
-image: ./images/vg.jpeg
+title: "Mehdi Hosseini Moghadam"
+excerpt: "AI Specialist and Data Scientist"
+author_profile: false
 ---
 
+<section class="hero" aria-labelledby="intro-title">
+  <div class="hero__copy">
+    <p class="eyebrow">London, United Kingdom <span aria-hidden="true">/</span> AI and Data</p>
+    <h1 id="intro-title">Building intelligent systems for complex, real-world data.</h1>
+    <p class="hero__lede">I am Mehdi Hosseini Moghadam, an AI specialist and data scientist working across LLM systems, data platforms, retrieval, speech technology, and digital twins.</p>
+    <div class="hero__actions">
+      <a class="button button--primary" href="{{ '/cv/' | relative_url }}">View CV</a>
+      <a class="button button--ghost" href="mailto:m.h.moghadam1996@gmail.com">Get in touch</a>
+    </div>
+  </div>
+  <div class="hero__portrait-wrap">
+    <div class="hero__halo" aria-hidden="true"></div>
+    <img class="hero__portrait" src="{{ '/images/me.jpeg' | relative_url }}" alt="Mehdi Hosseini Moghadam">
+    <p class="portrait-note">AI Specialist<br>Data Scientist</p>
+  </div>
+</section>
 
-<img src="./images/vg.jpeg" width="800px" height="400px"/>
+<section class="signal-grid" aria-label="Professional focus">
+  <article class="signal-card"><p class="signal-card__number">01</p><h2>LLM systems</h2><p>Agentic frameworks, reasoning, retrieval-augmented generation, vector search, fine-tuning, and knowledge graphs.</p></article>
+  <article class="signal-card"><p class="signal-card__number">02</p><h2>Data intelligence</h2><p>Real-time data platforms, entity extraction, stream processing, governance, and operational digital twins.</p></article>
+  <article class="signal-card"><p class="signal-card__number">03</p><h2>Applied research</h2><p>Deep learning, reinforcement learning, NLP, geospatial modelling, speech technologies, and generative AI.</p></article>
+</section>
 
-I'm Mehdi Hosseini Moghadam, Machine Learning engineer and Data Scientist
-My interest lies in the following areas:
-   - Spatial Data Analysis
-   - Computer Vision
-   - Natural Language Processing
-   - Automatic Speech Recognition
-   - Graph neural networks
-   - Deep Learning
-  
-<br />
+<section class="section-block" id="experience">
+  <div class="section-heading"><p class="eyebrow">Selected experience</p><h2>From research to production systems.</h2></div>
+  <div class="timeline">
+    <article class="timeline__item"><div class="timeline__date">2025 -- Present</div><div><h3>AI and Data Manager <span>— Tigris Systems</span></h3><p>Leading automation for maritime and logistics data: ETL pipelines, data governance, real-time streams, entity extraction, and an RLHF-based digital twin for maritime simulation.</p></div></article>
+    <article class="timeline__item"><div class="timeline__date">2023 -- 2025</div><div><h3>LLM/NLP Engineer, Team Lead <span>— Veer</span></h3><p>Built conversational multi-agent, voice-assistant, and search capabilities, using knowledge graphs and ontologies to improve discovery and search relevance.</p></div></article>
+    <article class="timeline__item"><div class="timeline__date">2022 -- 2023</div><div><h3>Machine Learning Engineer <span>— Agilysis Ltd</span></h3><p>Developed a traffic-management and air-quality digital twin using geospatial analysis, machine learning, and NLP.</p></div></article>
+    <article class="timeline__item"><div class="timeline__date">2019 -- 2022</div><div><h3>Co-Founder <span>— Kouventa AI</span></h3><p>Led R&D for conversational-AI products, including NLP, NLU, LLM, TTS, and ASR modules for chatbots and virtual assistants.</p></div></article>
+  </div>
+</section>
 
+<section class="research-panel" id="research">
+  <div><p class="eyebrow">Research and learning</p><h2>Making advanced AI easier to explore.</h2></div>
+  <div class="research-panel__content"><p>At the University of Oxford, I worked on an LLM-based genetic platform for protein design under the supervision of Sir Nigel Shadbolt. I also create accessible AI content on YouTube, with a focus on reinforcement learning and generative AI.</p><a class="text-link" href="https://www.youtube.com/@mehdihosseinimoghadam">Visit my YouTube channel <span aria-hidden="true">↗</span></a></div>
+</section>
 
-
----
-
-Hubbies
-======
-
-By the way I love tennis 🎾, running, learning new languages, trying new cuisines.
-
-
-
-<embed src="./images/CV.pdf" type="application/pdf" width="800px" height="800px">
-<!-- 
-Like many other Jekyll-based GitHub Pages templates, academicpages makes you separate the website's content from its form. The content & metadata of your website are in structured markdown files, while various other files constitute the theme, specifying how to transform that content & metadata into HTML pages. You keep these various markdown (.md), YAML (.yml), HTML, and CSS files in a public GitHub repository. Each time you commit and push an update to the repository, the [GitHub pages](https://pages.github.com/) service creates static HTML pages based on these files, which are hosted on GitHub's servers free of charge.
-
-Many of the features of dynamic content management systems (like Wordpress) can be achieved in this fashion, using a fraction of the computational resources and with far less vulnerability to hacking and DDoSing. You can also modify the theme to your heart's content without touching the content of your site. If you get to a point where you've broken something in Jekyll/HTML/CSS beyond repair, your markdown files describing your talks, publications, etc. are safe. You can rollback the changes or even delete the repository and start over -- just be sure to save the markdown files! Finally, you can also write scripts that process the structured data on the site, such as [this one](https://github.com/academicpages/academicpages.github.io/blob/master/talkmap.ipynb) that analyzes metadata in pages about talks to display [a map of every location you've given a talk](https://academicpages.github.io/talkmap.html).
-
-Getting started
-======
-1. Register a GitHub account if you don't have one and confirm your e-mail (required!)
-1. Fork [this repository](https://github.com/academicpages/academicpages.github.io) by clicking the "fork" button in the top right. 
-1. Go to the repository's settings (rightmost item in the tabs that start with "Code", should be below "Unwatch"). Rename the repository "[your GitHub username].github.io", which will also be your website's URL.
-1. Set site-wide configuration and create content & metadata (see below -- also see [this set of diffs](http://archive.is/3TPas) showing what files were changed to set up [an example site](https://getorg-testacct.github.io) for a user with the username "getorg-testacct")
-1. Upload any files (like PDFs, .zip files, etc.) to the files/ directory. They will appear at https://[your GitHub username].github.io/files/example.pdf.  
-1. Check status by going to the repository settings, in the "GitHub pages" section
-
-Site-wide configuration
-------
-The main configuration file for the site is in the base directory in [_config.yml](https://github.com/academicpages/academicpages.github.io/blob/master/_config.yml), which defines the content in the sidebars and other site-wide features. You will need to replace the default variables with ones about yourself and your site's github repository. The configuration file for the top menu is in [_data/navigation.yml](https://github.com/academicpages/academicpages.github.io/blob/master/_data/navigation.yml). For example, if you don't have a portfolio or blog posts, you can remove those items from that navigation.yml file to remove them from the header. 
-
-Create content & metadata
-------
-For site content, there is one markdown file for each type of content, which are stored in directories like _publications, _talks, _posts, _teaching, or _pages. For example, each talk is a markdown file in the [_talks directory](https://github.com/academicpages/academicpages.github.io/tree/master/_talks). At the top of each markdown file is structured data in YAML about the talk, which the theme will parse to do lots of cool stuff. The same structured data about a talk is used to generate the list of talks on the [Talks page](https://academicpages.github.io/talks), each [individual page](https://academicpages.github.io/talks/2012-03-01-talk-1) for specific talks, the talks section for the [CV page](https://academicpages.github.io/cv), and the [map of places you've given a talk](https://academicpages.github.io/talkmap.html) (if you run this [python file](https://github.com/academicpages/academicpages.github.io/blob/master/talkmap.py) or [Jupyter notebook](https://github.com/academicpages/academicpages.github.io/blob/master/talkmap.ipynb), which creates the HTML for the map based on the contents of the _talks directory).
-
-**Markdown generator**
-
-I have also created [a set of Jupyter notebooks](https://github.com/academicpages/academicpages.github.io/tree/master/markdown_generator
-) that converts a CSV containing structured data about talks or presentations into individual markdown files that will be properly formatted for the academicpages template. The sample CSVs in that directory are the ones I used to create my own personal website at stuartgeiger.com. My usual workflow is that I keep a spreadsheet of my publications and talks, then run the code in these notebooks to generate the markdown files, then commit and push them to the GitHub repository.
-
-How to edit your site's GitHub repository
-------
-Many people use a git client to create files on their local computer and then push them to GitHub's servers. If you are not familiar with git, you can directly edit these configuration and markdown files directly in the github.com interface. Navigate to a file (like [this one](https://github.com/academicpages/academicpages.github.io/blob/master/_talks/2012-03-01-talk-1.md) and click the pencil icon in the top right of the content preview (to the right of the "Raw | Blame | History" buttons). You can delete a file by clicking the trashcan icon to the right of the pencil icon. You can also create new files or upload files by navigating to a directory and clicking the "Create new file" or "Upload files" buttons. 
-
-Example: editing a markdown file for a talk
-![Editing a markdown file for a talk](/images/editing-talk.png)
-
-For more info
-------
-More info about configuring academicpages can be found in [the guide](https://academicpages.github.io/markdown/). The [guides for the Minimal Mistakes theme](https://mmistakes.github.io/minimal-mistakes/docs/configuration/) (which this theme was forked from) might also be helpful.  -->
+<section class="contact-band">
+  <p class="eyebrow">Let's connect</p><h2>Have an AI or data challenge worth solving?</h2><a class="button button--light" href="mailto:m.h.moghadam1996@gmail.com">m.h.moghadam1996@gmail.com</a>
+</section>

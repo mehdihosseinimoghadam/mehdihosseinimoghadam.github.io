@@ -10,7 +10,7 @@ locale                   : "en-US"
 title                    : "Mehdi Hosseini Moghadam"
 title_separator          : "-"
 name                     : &name "Mehdi Hosseini Moghadam"
-description              : &description "personal description"
+description              : &description "AI specialist and data scientist working across LLM systems, data platforms, and applied machine learning."
 url                      : https://mehdihosseinimoghadam.github.io/ # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "mehdihosseinimoghadam/mehdihosseinimoghadam.github.io"
@@ -82,10 +82,10 @@ analytics:
 author:
   name             : "Mehdi Hosseini Moghadam"
   avatar           : "me.jpeg"
-  bio              : "If Nothing Goes Right, Then Go Left"
-  location         : "Location"
+  bio              : "AI Specialist and Data Scientist"
+  location         : "London, United Kingdom"
   employer         :
-  pubmed           : "https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
+  pubmed           :
   googlescholar    : "https://scholar.google.com/citations?user=TKWbohsAAAAJ&hl=en"
   email            : "m.h.moghadam1996@gmail.com"
   researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
@@ -102,18 +102,18 @@ author:
   instagram        :
   impactstory      : #"https://profiles.impactstory.org/u/xxxx-xxxx-xxxx-xxxx"
   lastfm           :
-  linkedin         : "https://ir.linkedin.com/in/mehdi-hosseini-moghadam-384912198"
-  orcid            : "http://orcid.org/yourorcidurl"
+  linkedin         : "https://www.linkedin.com/in/mehdi-hosseini-moghadam-384912198/"
+  orcid            :
   pinterest        :
   soundcloud       :
   stackoverflow    : # http://stackoverflow.com/users/123456/username
   steam            :
   tumblr           :
-  twitter          : "replacethistwitterhandle"
+  twitter          :
   vine             :
   weibo            :
   xing             :
-  youtube          :
+  youtube          : "@mehdihosseinimoghadam"
   wikipedia        :
 
 
