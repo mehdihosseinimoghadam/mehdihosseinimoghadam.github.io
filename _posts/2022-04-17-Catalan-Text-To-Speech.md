@@ -142,7 +142,7 @@ L’àliga no caça mosques  | <audio src="https://github.com/mehdihosseinimog
 
 ## Copyright
 
-See [LICENSE](LICENSE) for details.
+See [LICENSE](https://github.com/mehdihosseinimoghadam/mehdihosseinimoghadam.github.io/blob/master/LICENSE) for details.
 
 
 
