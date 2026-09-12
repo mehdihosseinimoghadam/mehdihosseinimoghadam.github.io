@@ -11,7 +11,7 @@ title                    : "Mehdi Hosseini Moghadam"
 title_separator          : "-"
 name                     : &name "Mehdi Hosseini Moghadam"
 description              : &description "AI specialist and data scientist working across LLM systems, data platforms, and applied machine learning."
-url                      : https://mehdihosseinimoghadam.github.io/ # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
+url                      : https://mehdihosseinimoghadam.github.io # no trailing slash: base_path appends "/path", which would otherwise double the slash
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "mehdihosseinimoghadam/mehdihosseinimoghadam.github.io"
 teaser                   :  # filename of teaser fallback teaser image placed in /images/, .e.g. "500x300.png"
