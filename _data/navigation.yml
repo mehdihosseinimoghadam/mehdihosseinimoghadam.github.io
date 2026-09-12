@@ -1,13 +1,16 @@
-# main links links
+# Main navigation, rendered in the site header and footer.
 main:
   - title: "Experience"
     url: /#experience
 
-  - title: "Research"
-    url: /#research
+  - title: "Publications"
+    url: /publications/
 
-  - title: "CV"
-    url: /cv/
+  - title: "Talks"
+    url: /talks/
 
   - title: "Writing"
     url: /year-archive/
+
+  - title: "CV"
+    url: /cv/

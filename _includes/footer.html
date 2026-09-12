@@ -1,24 +1,50 @@
 {% include base_path %}
 
-<div class="page__footer-follow">
-  <ul class="social-icons">
-    {% if site.data.ui-text[site.locale].follow_label %}
-      <li><strong>{{ site.data.ui-text[site.locale].follow_label }}</strong></li>
-    {% endif %}
-    {% if site.twitter.username %}
-      <li><a href="https://twitter.com/{{ site.twitter.username }}"><i class="fab fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
-    {% endif %}
-    {% if site.facebook.username %}
-      <li><a href="https://facebook.com/{{ site.facebook.username }}"><i class="fab fa-facebook-square" aria-hidden="true"></i> Facebook</a></li>
-    {% endif %}
-    {% if site.author.github %}
-      <li><a href="http://github.com/{{ site.author.github }}"><i class="fab fa-github" aria-hidden="true"></i> GitHub</a></li>
-    {% endif %}
-    {% if site.author.bitbucket %}
-      <li><a href="http://bitbucket.org/{{ site.author.bitbucket }}"><i class="fab fa-bitbucket" aria-hidden="true"></i> Bitbucket</a></li>
-    {% endif %}
-    <li><a href="{% if site.atom_feed.path %}{{ site.atom_feed.path }}{% else %}{{ base_path }}/feed.xml{% endif %}"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].feed_label | default: "Feed" }}</a></li>
-  </ul>
-</div>
+<div class="site-footer">
+  <div class="site-footer__inner">
+    <div>
+      <a class="brand brand--footer" href="{{ base_path }}/">
+        <span class="brand__mark" aria-hidden="true">MH</span>
+        <span>{{ site.author.name | default: site.title }}</span>
+      </a>
+      <p class="site-footer__bio">{{ site.description }}</p>
+    </div>
 
-<div class="page__footer-copyright">&copy; {{ site.time | date: '%Y' }} {{ site.name | default: site.title }}. {{ site.data.ui-text[site.locale].powered_by | default: "Powered by" }} <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://github.com/academicpages/academicpages.github.io">AcademicPages</a>, a fork of <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+    <div>
+      <h2>Explore</h2>
+      <ul class="site-footer__list">
+        {% for link in site.data.navigation.main %}
+          {% if link.url contains 'http' %}{% assign domain = '' %}{% else %}{% assign domain = base_path %}{% endif %}
+          <li><a href="{{ domain }}{{ link.url }}">{{ link.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div>
+      <h2>Elsewhere</h2>
+      <ul class="site-footer__list">
+        {% if site.author.email %}
+          <li><a href="mailto:{{ site.author.email }}"><i class="fas fa-envelope" aria-hidden="true"></i> Email</a></li>
+        {% endif %}
+        {% if site.author.github %}
+          <li><a href="https://github.com/{{ site.author.github }}" rel="me noopener"><i class="fab fa-github" aria-hidden="true"></i> GitHub</a></li>
+        {% endif %}
+        {% if site.author.linkedin %}
+          <li><a href="{{ site.author.linkedin }}" rel="me noopener"><i class="fab fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        {% endif %}
+        {% if site.author.googlescholar %}
+          <li><a href="{{ site.author.googlescholar }}" rel="me noopener"><i class="fas fa-graduation-cap" aria-hidden="true"></i> Google Scholar</a></li>
+        {% endif %}
+        {% if site.author.youtube %}
+          <li><a href="https://www.youtube.com/{{ site.author.youtube }}" rel="me noopener"><i class="fab fa-youtube" aria-hidden="true"></i> YouTube</a></li>
+        {% endif %}
+        <li><a href="{% if site.atom_feed.path %}{{ site.atom_feed.path }}{% else %}{{ base_path }}/feed.xml{% endif %}"><i class="fas fa-rss" aria-hidden="true"></i> RSS feed</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="site-footer__bottom">
+    <span>&copy; {{ site.time | date: '%Y' }} {{ site.author.name | default: site.title }}{% if site.author.location %} &middot; {{ site.author.location }}{% endif %}</span>
+    <span><a href="{{ base_path }}/sitemap/">Sitemap</a> &middot; Built with <a href="https://jekyllrb.com" rel="nofollow noopener">Jekyll</a></span>
+  </div>
+</div>

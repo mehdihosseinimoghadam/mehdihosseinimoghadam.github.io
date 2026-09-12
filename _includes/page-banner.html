@@ -1,0 +1,47 @@
+{% comment %}
+  Shared page header band used by the single and archive layouts so every
+  inner page opens the same way. Expects `banner_page` to be set by the caller.
+{% endcomment %}
+{% include base_path %}
+
+{% assign p = include.page %}
+
+{% case p.collection %}
+  {% when 'publications' %}{% assign kicker = 'Publication' %}
+  {% when 'talks' %}{% assign kicker = 'Talk' %}
+  {% when 'teaching' %}{% assign kicker = 'Teaching' %}
+  {% when 'portfolio' %}{% assign kicker = 'Project' %}
+  {% when 'posts' %}{% assign kicker = 'Writing' %}
+  {% else %}{% assign kicker = include.kicker %}
+{% endcase %}
+
+<div class="page-banner">
+  <div class="page-banner__inner">
+    {% if kicker %}<p class="eyebrow">{{ kicker }}</p>{% endif %}
+
+    {% if p.title %}
+      <h1 class="page-banner__title" itemprop="headline">{{ p.title | markdownify | remove: "<p>" | remove: "</p>" }}</h1>
+    {% endif %}
+
+    {% if include.lede %}<p class="page-banner__lede">{{ include.lede }}</p>{% endif %}
+
+    {% capture banner_meta %}
+      {% if p.type %}<span>{{ p.type }}</span>{% endif %}
+      {% if p.venue %}
+        {% assign venue = p.venue | strip_newlines | strip %}
+        {% assign v_end = venue | size | minus: 1 %}
+        {% assign v_last = venue | slice: v_end, 1 %}
+        {% if v_last == ':' %}{% assign venue = venue | slice: 0, v_end | strip %}{% endif %}
+        <span>{{ venue }}</span>
+      {% endif %}
+      {% if p.location %}<span>{{ p.location }}</span>{% endif %}
+      {% if p.date %}<span><time datetime="{{ p.date | date_to_xmlschema }}">{{ p.date | date: "%B %-d, %Y" }}</time></span>{% endif %}
+      {% if p.read_time %}<span>{% include read-time.html %}</span>{% endif %}
+    {% endcapture %}
+
+    {% assign banner_meta = banner_meta | strip %}
+    {% if banner_meta != '' %}
+      <p class="page-banner__meta">{{ banner_meta }}</p>
+    {% endif %}
+  </div>
+</div>

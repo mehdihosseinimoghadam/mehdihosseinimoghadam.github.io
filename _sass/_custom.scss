@@ -1,0 +1,1927 @@
+// ==========================================================================
+//  PERSONAL SITE DESIGN SYSTEM
+//  Layered on top of Minimal Mistakes / AcademicPages.
+//  Everything here is intentionally last in the import order so it wins.
+// ==========================================================================
+
+// --------------------------------------------------------------------------
+//  1. Design tokens
+// --------------------------------------------------------------------------
+
+:root {
+  // Brand
+  --deep: #070d18;
+  --deep-2: #0b1422;
+  --lime: #ccf95d;
+  --blue: #2457ff;
+
+  // Surfaces + ink (light theme)
+  --bg: #f4f6fa;
+  --surface: #ffffff;
+  --surface-2: #eaeef6;
+  --surface-3: #e2e8f4;
+  --ink: #0b1220;
+  --ink-2: #4d5b73;
+  --ink-3: #7d889c;
+  --line: #dde3ed;
+  --line-2: #c7cfdd;
+
+  // Semantic accents
+  --accent: #2457ff;
+  --accent-hover: #1b46d6;
+  --accent-soft: #e6ecff;
+  --accent-on: #ffffff;
+  --glow: rgba(36, 87, 255, 0.18);
+
+  // Hero / inverted surfaces stay dark in both themes
+  --on-deep: #ffffff;
+  --on-deep-2: #c3d0e4;
+  --on-deep-3: #7c8aa4;
+  --deep-line: rgba(255, 255, 255, 0.14);
+
+  // Type
+  --font-display: "Inter Tight", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  // Rhythm
+  --shell: 1180px;
+  --gutter: clamp(1.25rem, 5vw, 3rem);
+  --radius: 14px;
+  --radius-sm: 9px;
+  --header-h: 68px;
+
+  // Elevation
+  --shadow-1: 0 1px 2px rgba(11, 18, 32, 0.05), 0 2px 8px rgba(11, 18, 32, 0.04);
+  --shadow-2: 0 4px 12px rgba(11, 18, 32, 0.07), 0 16px 40px rgba(11, 18, 32, 0.08);
+
+  --ease: cubic-bezier(0.22, 0.68, 0.35, 1);
+}
+
+html[data-theme="dark"] {
+  --bg: #070d18;
+  --surface: #0d1524;
+  --surface-2: #121c2e;
+  --surface-3: #17233a;
+  --ink: #e9eff9;
+  --ink-2: #9aa8c0;
+  --ink-3: #6d7c96;
+  --line: #1c2840;
+  --line-2: #283753;
+
+  --accent: #6d90ff;
+  --accent-hover: #8aa5ff;
+  --accent-soft: #14203a;
+  --accent-on: #060b15;
+  --glow: rgba(109, 144, 255, 0.22);
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-2: 0 4px 12px rgba(0, 0, 0, 0.45), 0 16px 44px rgba(0, 0, 0, 0.4);
+
+  color-scheme: dark;
+}
+
+// --------------------------------------------------------------------------
+//  2. Base
+// --------------------------------------------------------------------------
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 1.5rem);
+  background: var(--bg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "cv05" 1, "ss01" 1;
+  transition: background-color 0.25s var(--ease), color 0.25s var(--ease);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: var(--lime); color: var(--deep); }
+
+// Consistent, visible focus for keyboard users only.
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+:focus:not(:focus-visible) { outline: none; }
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  z-index: 999;
+  padding: 0.7rem 1.1rem;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  border-radius: 0 0 var(--radius-sm) 0;
+
+  &:focus {
+    left: 0;
+    top: 0;
+  }
+}
+
+// The theme animates #main in; keep it but make it gentler.
+#main {
+  animation: intro 0.4s both;
+  animation-delay: 0.1s;
+}
+
+// --------------------------------------------------------------------------
+//  3. Shared primitives
+// --------------------------------------------------------------------------
+
+.shell {
+  width: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.eyebrow {
+  margin: 0 0 1rem;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.78rem 1.4rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  text-decoration: none !important;
+  cursor: pointer;
+  transition: transform 0.18s var(--ease), background-color 0.18s var(--ease),
+              border-color 0.18s var(--ease), box-shadow 0.18s var(--ease);
+
+  &:hover { transform: translateY(-2px); }
+  &:active { transform: translateY(0); }
+}
+
+.button--primary {
+  background: var(--lime);
+  color: var(--deep) !important;
+  box-shadow: 0 6px 20px rgba(204, 249, 93, 0.25);
+
+  &:hover { background: #d8ff77; box-shadow: 0 10px 28px rgba(204, 249, 93, 0.35); }
+}
+
+.button--ghost {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff !important;
+
+  &:hover { border-color: rgba(255, 255, 255, 0.6); background: rgba(255, 255, 255, 0.1); }
+}
+
+.button--light {
+  background: #fff;
+  color: var(--deep) !important;
+  box-shadow: var(--shadow-1);
+
+  &:hover { box-shadow: var(--shadow-2); }
+}
+
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--accent) !important;
+  font-weight: 600;
+  text-decoration: none !important;
+
+  span { transition: transform 0.2s var(--ease); }
+  &:hover span { transform: translate(3px, -3px); }
+}
+
+// Small capsule label used for venues, types and tags.
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--ink-2);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.pill--accent {
+  border-color: transparent;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+// Progressive reveal on scroll (JS adds .is-in).
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+.reveal.is-in { opacity: 1; transform: none; }
+.no-js .reveal { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; }
+}
+
+// --------------------------------------------------------------------------
+//  4. Site header
+// --------------------------------------------------------------------------
+
+.masthead { display: none; } // replaced by .site-header
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
+}
+
+// Fallback for browsers without color-mix.
+@supports not (background: color-mix(in srgb, red 50%, blue)) {
+  .site-header { background: var(--bg); }
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  height: var(--header-h);
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-right: auto;
+  color: var(--ink) !important;
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  text-decoration: none !important;
+  white-space: nowrap;
+}
+
+.brand__mark {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex: none;
+  border-radius: 8px;
+  background: var(--deep);
+  color: var(--lime);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+html[data-theme="dark"] .brand__mark { background: var(--lime); color: var(--deep); }
+
+.site-nav { display: flex; align-items: center; gap: 0.35rem; }
+
+.site-nav a {
+  position: relative;
+  padding: 0.45rem 0.7rem;
+  border-radius: 8px;
+  color: var(--ink-2) !important;
+  font-size: 0.92rem;
+  font-weight: 500;
+  text-decoration: none !important;
+  transition: color 0.16s var(--ease), background-color 0.16s var(--ease);
+
+  &:hover { color: var(--ink) !important; background: var(--surface-2); }
+}
+
+.site-nav a.is-active {
+  color: var(--ink) !important;
+  font-weight: 600;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0.7rem;
+    right: 0.7rem;
+    bottom: 0.12rem;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--accent);
+  }
+}
+
+.site-header__actions { display: flex; align-items: center; gap: 0.5rem; }
+
+.icon-button {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: color 0.16s var(--ease), border-color 0.16s var(--ease), background-color 0.16s var(--ease);
+
+  &:hover { color: var(--ink); border-color: var(--line-2); background: var(--surface-2); }
+  svg { width: 17px; height: 17px; display: block; }
+}
+
+.theme-toggle .icon-moon { display: none; }
+html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
+html[data-theme="dark"] .theme-toggle .icon-sun { display: none; }
+
+.nav-toggle { display: none; }
+
+// aria-expanded drives the icon swap, so state lives in exactly one place.
+.nav-toggle .icon-close { display: none; }
+.nav-toggle[aria-expanded="true"] .icon-menu { display: none; }
+.nav-toggle[aria-expanded="true"] .icon-close { display: block; }
+
+.header-cta {
+  padding: 0.55rem 1.05rem;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--bg) !important;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none !important;
+  transition: opacity 0.16s var(--ease);
+
+  &:hover { opacity: 0.85; }
+}
+
+// Mobile drawer
+@media (max-width: 880px) {
+  .site-nav,
+  .header-cta { display: none; }
+  .nav-toggle { display: grid; }
+
+  // NB: the header sets backdrop-filter, which makes it the containing block
+  // for fixed-position descendants. The drawer is therefore absolute against
+  // the (sticky) header rather than fixed to the viewport.
+  .site-nav.is-open {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    max-height: calc(100vh - var(--header-h));
+    padding: 0.75rem var(--gutter) 2rem;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    box-shadow: var(--shadow-2);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    animation: navIn 0.22s var(--ease) both;
+  }
+
+  .site-nav.is-open a {
+    padding: 1rem 0.25rem;
+    border-bottom: 1px solid var(--line);
+    border-radius: 0;
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+
+    &:hover { background: transparent; }
+    &.is-active::after { display: none; }
+    &.is-active { color: var(--accent) !important; }
+  }
+}
+
+@keyframes navIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: none; }
+}
+
+// --------------------------------------------------------------------------
+//  5. Site footer
+// --------------------------------------------------------------------------
+
+// The theme pins the footer with position:absolute plus a fixed body
+// padding-bottom. That reserved strip is too short for a real footer, so put
+// the document back into normal flow and let the page grow instead.
+body { padding-bottom: 0; }
+
+.page__footer {
+  position: static;
+  bottom: auto;
+  clear: both;
+  width: 100%;
+  margin-top: 0;
+  padding: 0;
+  background: var(--deep);
+  color: var(--on-deep-2);
+  font-family: var(--font-body);
+
+  footer { max-width: none; margin: 0; padding: 0; }
+  a { color: var(--on-deep); text-decoration: none; }
+}
+
+.site-footer__inner {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 3rem;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding: 4rem var(--gutter) 2.5rem;
+}
+
+.site-footer__bio {
+  max-width: 34ch;
+  margin: 0.9rem 0 0;
+  color: var(--on-deep-3);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.site-footer h2 {
+  margin: 0 0 1.1rem;
+  color: var(--on-deep-3);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.site-footer__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li { margin-bottom: 0.55rem; }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--on-deep-2);
+    font-size: 0.93rem;
+    transition: color 0.16s var(--ease);
+
+    &:hover { color: var(--lime); }
+    i { width: 1.1em; font-size: 0.95em; opacity: 0.75; }
+  }
+}
+
+.site-footer__bottom {
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding: 1.4rem var(--gutter) 2.2rem;
+  border-top: 1px solid var(--deep-line);
+  color: var(--on-deep-3);
+  font-size: 0.8rem;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  justify-content: space-between;
+
+  a { color: var(--on-deep-3); text-decoration: underline; text-underline-offset: 3px; }
+  a:hover { color: var(--on-deep); }
+}
+
+@media (max-width: 800px) {
+  .site-footer__inner { grid-template-columns: 1fr; gap: 2.25rem; padding-top: 3rem; }
+}
+
+// --------------------------------------------------------------------------
+//  6. Home: hero
+// --------------------------------------------------------------------------
+
+.portfolio-page { overflow-x: clip; }
+.portfolio-page .page__content { font-size: inherit; }
+
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(260px, 0.55fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+  min-height: calc(100vh - var(--header-h));
+  padding: clamp(4rem, 9vw, 7rem) var(--gutter) clamp(5rem, 9vw, 8rem);
+  background: var(--deep);
+  color: var(--on-deep);
+  isolation: isolate;
+  overflow: hidden;
+}
+
+// Hairline grid + two soft light sources give the flat navy some depth.
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 68px 68px;
+  mask-image: radial-gradient(ellipse 85% 70% at 60% 45%, #000 30%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 85% 70% at 60% 45%, #000 30%, transparent 78%);
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(760px 520px at 78% 18%, rgba(36, 87, 255, 0.34), transparent 70%),
+    radial-gradient(560px 420px at 12% 96%, rgba(204, 249, 93, 0.1), transparent 68%);
+  pointer-events: none;
+}
+
+.hero__copy { position: relative; z-index: 1; max-width: 62ch; }
+
+.hero .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.85rem 0.4rem 0.7rem;
+  border: 1px solid var(--deep-line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--lime);
+  letter-spacing: 0.12em;
+}
+
+// Live indicator dot in the hero eyebrow.
+.hero .eyebrow::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--lime);
+  box-shadow: 0 0 0 0 rgba(204, 249, 93, 0.7);
+  animation: pulse 2.6s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(204, 249, 93, 0.6); }
+  70% { box-shadow: 0 0 0 9px rgba(204, 249, 93, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(204, 249, 93, 0); }
+}
+
+.hero h1 {
+  max-width: 16ch;
+  margin: 1.6rem 0 0;
+  color: #fff;
+  font-size: clamp(2.6rem, 5.6vw, 4.9rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.hero__lede {
+  max-width: 56ch;
+  margin: 1.6rem 0 2.4rem;
+  color: var(--on-deep-2);
+  font-size: clamp(1.02rem, 1.35vw, 1.2rem);
+  line-height: 1.62;
+}
+
+.hero__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+// Portrait
+.hero__portrait-wrap {
+  position: relative;
+  z-index: 1;
+  justify-self: end;
+  width: min(100%, 330px);
+}
+
+.hero__portrait {
+  display: block;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 20px;
+  filter: saturate(0.95) contrast(1.04);
+}
+
+// Offset lime frame behind the portrait.
+.hero__halo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  aspect-ratio: 1;
+  border: 1px solid rgba(204, 249, 93, 0.55);
+  border-radius: 20px;
+  transform: translate(14px, 14px);
+  transition: transform 0.4s var(--ease);
+}
+
+.hero__portrait-wrap:hover .hero__halo { transform: translate(20px, 20px); }
+
+.portrait-note {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  margin: 1.6rem 0 0 0;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--deep-line);
+  border-radius: 10px;
+  background: rgba(7, 13, 24, 0.92);
+  backdrop-filter: blur(8px);
+  color: var(--lime);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  line-height: 1.7;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.portfolio-page .hero::after { z-index: -1; }
+
+// Bottom-left wordmark strip.
+.portfolio-page .hero .hero__copy::after {
+  content: "";
+  display: block;
+  width: 54px;
+  height: 2px;
+  margin-top: 2.6rem;
+  background: var(--lime);
+  opacity: 0.7;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    padding-top: clamp(3rem, 10vw, 4.5rem);
+  }
+  .hero__copy { order: 2; }
+  .hero__portrait-wrap { order: 1; justify-self: start; width: min(100%, 210px); }
+  .hero h1 { font-size: clamp(2.3rem, 9vw, 3.4rem); }
+}
+
+// --------------------------------------------------------------------------
+//  7. Home: sections
+// --------------------------------------------------------------------------
+
+.portfolio-page .signal-grid,
+.portfolio-page .section-block,
+.portfolio-page .research-panel {
+  width: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.portfolio-page .signal-grid { margin-top: clamp(3.5rem, 8vw, 6rem); }
+.portfolio-page .section-block,
+.portfolio-page .research-panel { margin-top: clamp(3.5rem, 8vw, 7rem); }
+
+.signal-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 0;
+  background: none;
+  border: 0;
+}
+
+.signal-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 1.75rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  overflow: hidden;
+  transition: transform 0.25s var(--ease), border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+
+  &::after {
+    content: "";
+    position: absolute;
+    right: -60px;
+    top: -60px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--glow), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s var(--ease);
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: var(--line-2);
+    box-shadow: var(--shadow-2);
+  }
+  &:hover::after { opacity: 1; }
+}
+
+.signal-card__number {
+  margin: 0 0 2.5rem;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.signal-card h2 {
+  margin: 0 0 0.6rem;
+  font-size: 1.28rem;
+  font-weight: 650;
+  letter-spacing: -0.025em;
+}
+
+.signal-card p:last-child {
+  margin: 0;
+  color: var(--ink-2);
+  font-size: 0.95rem;
+  line-height: 1.62;
+}
+
+.section-heading {
+  display: grid;
+  grid-template-columns: 0.8fr 1.6fr;
+  gap: 2rem;
+  padding-bottom: 2rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.section-heading h2,
+.research-panel h2,
+.contact-band h2 {
+  margin: 0;
+  font-size: clamp(1.9rem, 3.6vw, 3.1rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+// Timeline
+.timeline__item {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 2rem;
+  padding: 1.9rem 1rem 1.9rem 0.9rem;
+  margin-inline: -0.9rem;
+  border-bottom: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  transition: background-color 0.22s var(--ease);
+
+  &:hover { background: var(--surface); }
+  &:hover h3 { color: var(--accent); }
+  &:last-child { border-bottom: 0; }
+}
+
+.timeline__date,
+.cv-entry__meta {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.73rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  padding-top: 0.32rem;
+}
+
+.timeline h3,
+.cv-entry h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 650;
+  letter-spacing: -0.025em;
+  transition: color 0.2s var(--ease);
+}
+
+.timeline h3 span,
+.cv-entry h3 span { color: var(--ink-3); font-weight: 450; }
+
+.timeline p,
+.cv-entry p {
+  max-width: 68ch;
+  margin: 0;
+  color: var(--ink-2);
+  font-size: 0.97rem;
+  line-height: 1.65;
+}
+
+// Research panel
+.research-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+  padding: clamp(2rem, 4vw, 3.25rem);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background:
+    radial-gradient(700px 300px at 100% 0%, var(--accent-soft), transparent 70%),
+    var(--surface);
+}
+
+.portfolio-page .research-panel {
+  width: min(var(--shell), 100%);
+  padding-inline: clamp(2rem, 4vw, 3.25rem);
+  margin-inline: auto;
+}
+
+.research-panel__content p {
+  margin-top: 0;
+  color: var(--ink-2);
+  line-height: 1.68;
+}
+
+// Contact band
+.contact-band {
+  position: relative;
+  margin: clamp(3.5rem, 8vw, 7rem) 0 0;
+  padding: clamp(3.5rem, 7vw, 5.5rem) var(--gutter);
+  background: var(--blue);
+  color: #fff;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.contact-band > * {
+  position: relative;
+  z-index: 1;
+  max-width: var(--shell);
+  margin-inline: auto;
+}
+
+.contact-band::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(560px 380px at 88% 110%, rgba(204, 249, 93, 0.22), transparent 65%),
+    radial-gradient(500px 340px at 5% -20%, rgba(255, 255, 255, 0.18), transparent 65%);
+}
+
+.contact-band .eyebrow { color: var(--lime); }
+.contact-band h2 { max-width: 20ch; margin-bottom: 2rem; color: #fff; }
+
+@media (max-width: 900px) {
+  .signal-grid { grid-template-columns: 1fr; }
+  .section-heading { grid-template-columns: 1fr; gap: 1rem; }
+  .timeline__item { grid-template-columns: 1fr; gap: 0.45rem; }
+  .timeline__date { padding-top: 0; }
+  .research-panel { grid-template-columns: 1fr; }
+}
+
+// --------------------------------------------------------------------------
+//  8. Inner page shell
+//  The theme uses a Susy float grid; replace it with a plain CSS grid so the
+//  sidebar and content behave predictably at every width.
+// --------------------------------------------------------------------------
+
+.page-banner {
+  padding: clamp(2.5rem, 6vw, 4.25rem) var(--gutter) clamp(1.75rem, 3vw, 2.5rem);
+  border-bottom: 1px solid var(--line);
+  background:
+    radial-gradient(900px 320px at 12% 0%, var(--accent-soft), transparent 72%),
+    var(--surface);
+}
+
+.page-banner__inner { max-width: var(--shell); margin-inline: auto; }
+
+.page-banner h1 {
+  margin: 0;
+  font-size: clamp(2.1rem, 4.6vw, 3.4rem);
+  font-weight: 700;
+  letter-spacing: -0.042em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.page-banner__lede {
+  max-width: 62ch;
+  margin: 1rem 0 0;
+  color: var(--ink-2);
+  font-size: 1.05rem;
+  line-height: 1.62;
+}
+
+.page-banner__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.9rem;
+  margin: 1.15rem 0 0;
+  color: var(--ink-3);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.04em;
+
+  a { color: var(--ink-3); }
+}
+
+#main {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+  width: 100%;
+  max-width: var(--shell);
+  margin: clamp(2rem, 5vw, 3.5rem) auto clamp(3rem, 7vw, 5rem);
+  padding-inline: var(--gutter);
+  float: none;
+}
+
+#main::before, #main::after { content: none; } // kill theme clearfix
+
+.page,
+.archive {
+  float: none !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  min-width: 0;
+}
+
+.page__inner-wrap { width: auto; float: none; }
+.page__content, .page__meta, .page__share { width: auto; float: none; }
+
+.page__title {
+  margin: 0 0 0.6rem;
+  font-size: clamp(1.9rem, 4vw, 2.9rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+.page__lead { font-family: var(--font-body); color: var(--ink-2); }
+
+.page__meta,
+.page__date {
+  color: var(--ink-3);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+}
+
+.page__meta a, .page__date a { color: var(--ink-2); }
+
+@media (max-width: 1000px) {
+  #main { grid-template-columns: minmax(0, 1fr); }
+}
+
+// --------------------------------------------------------------------------
+//  9. Author sidebar
+// --------------------------------------------------------------------------
+
+.sidebar {
+  float: none !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 1.4rem !important;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  opacity: 1 !important;
+
+  &.sticky { position: sticky; top: calc(var(--header-h) + 1.5rem); }
+
+  h3, h4 { font-family: var(--font-display); }
+}
+
+.author__avatar {
+  display: block;
+  width: auto;
+  margin-bottom: 1rem;
+
+  img {
+    width: 72px;
+    height: 72px;
+    max-width: 72px;
+    border-radius: 14px;
+    object-fit: cover;
+    }
+}
+
+.author__name {
+  margin: 0 0 0.25rem;
+  font-size: 1.05rem;
+  font-weight: 650;
+  letter-spacing: -0.03em;
+}
+
+.author__bio {
+  margin: 0 0 1rem;
+  color: var(--ink-2);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+// The theme's "Follow" button collapses the link list on small screens; the
+// list is short enough to always show, so drop the button entirely.
+.author__urls-wrapper button { display: none !important; }
+
+.author__urls-wrapper {
+  position: static;
+
+  .author__urls {
+    display: block !important;
+    position: static;
+    width: auto;
+    margin: 0;
+    padding: 1rem 0 0;
+    border: 0;
+    border-top: 1px solid var(--line);
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+
+    &::before, &::after { content: none; }
+
+    li {
+      padding: 0;
+      margin-bottom: 0.5rem;
+      color: var(--ink-2);
+      font-size: 0.86rem;
+      white-space: normal;
+    }
+
+    a {
+      color: var(--ink-2);
+      text-decoration: none;
+      transition: color 0.16s var(--ease);
+      &:hover { color: var(--accent); text-decoration: none; }
+    }
+
+    i { width: 1.2em; opacity: 0.7; }
+  }
+}
+
+// --------------------------------------------------------------------------
+//  10. Archive listings (publications, talks, writing, teaching, portfolio)
+// --------------------------------------------------------------------------
+
+.archive {
+  margin-bottom: 0;
+
+  a { text-decoration: none; }
+  a:hover { text-decoration: none; }
+  a:hover img { box-shadow: none; }
+
+  > h1.page__title { display: none; } // supplied by .page-banner instead
+}
+
+.archive__subtitle {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2.75rem 0 1.25rem;
+  padding: 0;
+  border: 0;
+  color: var(--ink-3);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+
+  &::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  &:first-child { margin-top: 0; }
+}
+
+.list__item,
+.grid__item { margin-bottom: 1rem; }
+
+.list__item .archive__item,
+.grid__item .archive__item {
+  position: relative;
+  padding: 1.5rem 1.6rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  transition: transform 0.22s var(--ease), border-color 0.22s var(--ease), box-shadow 0.22s var(--ease);
+
+  &:hover {
+    transform: translateY(-3px);
+    border-color: var(--line-2);
+    box-shadow: var(--shadow-2);
+  }
+}
+
+.archive__item-title {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-display);
+  font-size: 1.22rem;
+  font-weight: 650;
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+
+  a {
+    color: var(--ink);
+    text-decoration: none;
+    transition: color 0.16s var(--ease);
+    &:hover { color: var(--accent); }
+  }
+
+  // Make the whole card clickable via the title's permalink.
+  > a[rel="permalink"]::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius);
+  }
+
+  .fa-link { display: none; }
+}
+
+.archive__item-excerpt {
+  margin: 0.7rem 0 0;
+  color: var(--ink-2);
+  font-size: 0.95rem;
+  line-height: 1.62;
+
+  p { margin: 0; }
+}
+
+// Venue / date line rendered by archive-single.html
+.archive__item > p {
+  margin: 0.35rem 0 0;
+  color: var(--ink-3);
+  font-size: 0.88rem;
+
+  i { font-style: normal; color: var(--ink-2); }
+}
+
+.archive__item .page__meta { margin: 0 0 0.6rem; }
+
+// Citation block inside publication cards
+.archive__item-citation {
+  position: relative;
+  z-index: 1;
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--line);
+  color: var(--ink-3);
+  font-size: 0.82rem;
+  line-height: 1.55;
+
+  a { color: var(--accent); word-break: break-word; }
+  u { text-decoration: none; }
+}
+
+.archive__item-links {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.archive__item-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.9rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.archive__item-teaser {
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-bottom: 1rem;
+  img { width: 100%; display: block; }
+}
+
+.taxonomy__index,
+.page__taxonomy-item {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.page__taxonomy {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.page__taxonomy-item {
+  display: inline-flex;
+  padding: 0.3rem 0.7rem;
+  margin: 0 0.35rem 0.45rem 0;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--ink-2);
+  text-decoration: none;
+  transition: border-color 0.16s var(--ease), color 0.16s var(--ease);
+
+  &:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+}
+
+.page__meta-title {
+  margin-bottom: 0.6rem;
+  color: var(--ink-3);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+// --------------------------------------------------------------------------
+//  11. Long-form article content
+// --------------------------------------------------------------------------
+
+.page__content {
+  font-size: 1.02rem;
+  line-height: 1.72;
+  color: var(--ink);
+
+  > p, > ul, > ol, > dl, > blockquote, > pre, > table, > figure, > h2, > h3, > h4 {
+    max-width: 72ch;
+  }
+
+  p, li, dl { font-size: inherit; }
+
+  p { margin: 0 0 1.3em; }
+
+  a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
+    transition: text-decoration-color 0.16s var(--ease);
+
+    &:hover { text-decoration-color: var(--accent); }
+  }
+
+  h2 {
+    margin: 2.6em 0 0.7em;
+    padding-bottom: 0.45em;
+    border-bottom: 1px solid var(--line);
+    font-size: 1.6rem;
+    font-weight: 650;
+    letter-spacing: -0.03em;
+  }
+
+  h3 {
+    margin: 2em 0 0.6em;
+    font-size: 1.3rem;
+    font-weight: 650;
+    letter-spacing: -0.025em;
+  }
+
+  h4 { margin: 1.8em 0 0.5em; font-size: 1.1rem; font-weight: 650; }
+
+  ul, ol { padding-left: 1.35em; }
+  li { margin-bottom: 0.45em; }
+  li::marker { color: var(--ink-3); }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+  }
+
+  figure img { border: 0; }
+
+  blockquote {
+    margin: 1.8em 0;
+    padding: 0.2em 0 0.2em 1.4em;
+    border-left: 3px solid var(--accent);
+    color: var(--ink-2);
+    font-style: normal;
+
+    p:last-child { margin-bottom: 0; }
+  }
+
+  hr { margin: 2.5em 0; border: 0; border-top: 1px solid var(--line); }
+
+  // Inline code
+  code {
+    padding: 0.15em 0.4em;
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    background: var(--surface-2);
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.86em;
+  }
+
+  // Fenced blocks
+  pre, .highlight, div.highlighter-rouge {
+    max-width: 100%;
+    margin: 1.6em 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface-2);
+    overflow-x: auto;
+  }
+
+  pre, .highlight pre {
+    padding: 1.1rem 1.25rem;
+    background: none;
+    border: 0;
+    border-radius: 0;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    line-height: 1.62;
+  }
+
+  pre code, .highlight code {
+    padding: 0;
+    border: 0;
+    background: none;
+    font-size: inherit;
+  }
+
+  table {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin: 1.6em 0;
+    border-collapse: collapse;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    font-size: 0.92rem;
+    overflow-x: auto;
+  }
+
+  th, td { padding: 0.6rem 0.85rem; border-bottom: 1px solid var(--line); text-align: left; }
+  th { background: var(--surface-2); font-family: var(--font-display); font-weight: 650; }
+  tr:last-child td { border-bottom: 0; }
+
+  // Embedded PDFs on publication pages should not overflow the column.
+  embed, iframe, video {
+    max-width: 100%;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+  }
+
+  audio { width: 100%; max-width: 72ch; margin: 0.5rem 0 1.5rem; }
+}
+
+// Dark-mode syntax highlighting: the theme ships light-only Rouge colours.
+html[data-theme="dark"] .page__content {
+  // Lift code blocks clear of the page background so their edges read.
+  .highlight, pre, div.highlighter-rouge { background: #101b31; }
+
+  .highlight {
+    .c, .c1, .cm, .cs, .cd { color: #5f6f8c; }
+    .k, .kd, .kn, .kp, .kr, .kt, .kc { color: #c792ea; }
+    .s, .s1, .s2, .sb, .sc, .sd, .se, .sh, .si, .sx, .sr { color: #c3e88d; }
+    .m, .mf, .mh, .mi, .il, .mo, .mb, .mx { color: #f78c6c; }
+    .n, .na, .nb, .nc, .nd, .ne, .nf, .ni, .nl, .nn, .nt, .nv, .no, .py { color: #82aaff; }
+    .o, .ow, .p { color: #89ddff; }
+    .err { color: #ff5370; background: none; }
+    .gd { color: #ff5370; }
+    .gi { color: #c3e88d; }
+  }
+}
+
+// --------------------------------------------------------------------------
+//  12. Post footer: share, pagination, related
+// --------------------------------------------------------------------------
+
+.page__share {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+
+  .page__share-title {
+    margin-bottom: 0.7rem;
+    color: var(--ink-3);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.95rem;
+  margin: 0 0.4rem 0.5rem 0;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink-2) !important;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none !important;
+  text-transform: none;
+  letter-spacing: 0;
+  transition: border-color 0.16s var(--ease), color 0.16s var(--ease), transform 0.16s var(--ease);
+
+  &:hover { border-color: var(--accent); color: var(--accent) !important; transform: translateY(-1px); }
+}
+
+.btn--accent,
+.btn--primary {
+  border-color: transparent;
+  background: var(--accent);
+  color: var(--accent-on) !important;
+  &:hover { background: var(--accent-hover); color: var(--accent-on) !important; }
+}
+
+.pagination {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+
+  ul { display: flex; flex-wrap: wrap; gap: 0.5rem; border: 0; }
+
+  li a {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink-2);
+    font-family: var(--font-body);
+    text-decoration: none;
+
+    &:hover { border-color: var(--accent); color: var(--accent); }
+  }
+}
+
+.page__related {
+  grid-column: 1 / -1;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+
+  .page__related-title {
+    margin-bottom: 1.25rem;
+    color: var(--ink-3);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .grid__wrapper { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+  .grid__item { width: auto !important; float: none !important; margin: 0 !important; }
+  .archive__item-title { font-size: 1.02rem; }
+  .archive__item-excerpt { font-size: 0.88rem; }
+}
+
+// --------------------------------------------------------------------------
+//  13. CV page
+// --------------------------------------------------------------------------
+
+.cv-page {
+  max-width: 100%;
+
+  .cv-intro {
+    max-width: 62ch;
+    margin: 0 0 3rem;
+    color: var(--ink-2);
+    font-size: 1.18rem;
+    line-height: 1.6;
+  }
+
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 3.25rem 0 0.75rem;
+    padding: 0;
+    border: 0;
+    color: var(--ink-3);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+
+    &::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+  }
+
+  ul { padding-left: 1.2em; color: var(--ink-2); }
+}
+
+.cv-entry {
+  padding: 1.4rem 1rem 1.4rem 0.9rem;
+  margin-inline: -0.9rem;
+  border-bottom: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  transition: background-color 0.22s var(--ease);
+
+  &:hover { background: var(--surface); }
+  &:last-of-type { border-bottom: 0; }
+}
+
+.cv-entry__meta { margin: 0 0 0.45rem !important; }
+
+.skill-list {
+  max-width: 72ch;
+  color: var(--ink-2);
+  line-height: 1.9;
+}
+
+// --------------------------------------------------------------------------
+//  15. Misc theme corrections
+// --------------------------------------------------------------------------
+
+.notice, .notice--primary, .notice--info, .notice--warning, .notice--success, .notice--danger {
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+}
+
+.page__hero, .page__hero--overlay { border-radius: 0; }
+
+.taxonomy__section { margin-bottom: 2.5rem; }
+
+.back-to-top {
+  color: var(--ink-3);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+// Utility: hide the theme's decorative bits we no longer use.
+.author__urls-wrapper .btn--inverse { display: none; }
+
+// --------------------------------------------------------------------------
+//  16. Layout modifiers and late corrections
+// --------------------------------------------------------------------------
+
+// The homepage <main> also carries #main; it must stay full-bleed.
+#main.portfolio-page {
+  display: block;
+  max-width: none;
+  margin: 0;
+  padding-inline: 0;
+}
+
+// Pages without an author card get one centred, readable column.
+#main.is-narrow {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 860px;
+}
+
+#main.is-narrow .page__content > p,
+#main.is-narrow .page__content > ul,
+#main.is-narrow .page__content > ol,
+#main.is-narrow .page__content > blockquote { max-width: none; }
+
+.brand--footer {
+  color: var(--on-deep) !important;
+  margin-right: 0;
+}
+
+.brand--footer .brand__mark { background: var(--lime); color: var(--deep); }
+
+// Screen-reader-only text (the theme defines .sr-only but not consistently).
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Archive card label + meta rows
+.archive__item-labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0 0 0.85rem !important;
+}
+
+.archive__item-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.85rem;
+  margin: 0.4rem 0 0 !important;
+  color: var(--ink-3) !important;
+  font-family: var(--font-mono);
+  font-size: 0.75rem !important;
+  letter-spacing: 0.02em;
+
+  // Thin separators between meta fields.
+  span + span::before {
+    content: "";
+    display: inline-block;
+    width: 3px;
+    height: 3px;
+    margin-right: 0.85rem;
+    vertical-align: middle;
+    border-radius: 50%;
+    background: var(--line-2);
+  }
+}
+
+// Citation callout on publication pages
+.citation-block {
+  margin: 0 0 2rem;
+  padding: 1.25rem 1.4rem;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+
+  p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  a { color: var(--accent); word-break: break-word; }
+}
+
+.citation-block__title {
+  margin: 0 0 0.55rem;
+  padding: 0;
+  border: 0;
+  color: var(--ink-3);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.citation-block__link { margin-top: 0.5rem !important; font-size: 0.84rem !important; }
+
+// The publication pages embed a PDF viewer; keep it inside the column.
+.page__content embed[type="application/pdf"] {
+  width: 100% !important;
+  height: min(80vh, 900px) !important;
+  margin: 1.5rem 0;
+}
+
+// 404 and other bare pages
+.page__content > p:first-child:last-child { margin-bottom: 0; }
+
+// --------------------------------------------------------------------------
+//  17. Archive excerpt clamping
+//  Abstracts run long; a list should stay scannable. The full text is one
+//  click away on the item's own page.
+// --------------------------------------------------------------------------
+
+.list__item .archive__item-excerpt {
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.grid__item .archive__item-excerpt {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// Hero headline sizing: give the copy column a little more room so the
+// headline breaks over three lines rather than four on a laptop.
+.hero { grid-template-columns: minmax(0, 1.55fr) minmax(240px, 0.45fr); }
+.hero h1 { max-width: 18ch; font-size: clamp(2.5rem, 4.8vw, 4.3rem); }
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; }
+}
+
+// --------------------------------------------------------------------------
+//  18. CV entries share the homepage timeline's two-column rhythm.
+//  The markup is a flat list (meta, h3, p...), so place the columns explicitly.
+// --------------------------------------------------------------------------
+
+@media (min-width: 720px) {
+  .cv-entry {
+    display: grid;
+    grid-template-columns: 172px minmax(0, 1fr);
+    column-gap: 2rem;
+    align-items: start;
+  }
+
+  .cv-entry__meta { grid-column: 1; grid-row: 1 / span 20; }
+  .cv-entry h3,
+  .cv-entry p:not(.cv-entry__meta),
+  .cv-entry ul { grid-column: 2; }
+}
+
+// --------------------------------------------------------------------------
+//  19. Small-screen refinements
+// --------------------------------------------------------------------------
+
+@media (max-width: 600px) {
+  // The headline's lower clamp bound is still too large on a phone.
+  .hero h1 { font-size: clamp(2.05rem, 8.5vw, 3rem); }
+
+  // "London, United Kingdom / AI and Data" breaks badly inside a pill;
+  // drop the capsule and let it read as a plain label.
+  .hero .eyebrow {
+    display: block;
+    padding: 0;
+    border: 0;
+    background: none;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+  }
+  .hero .eyebrow::before { display: none; }
+
+  .brand { font-size: 0.94rem; letter-spacing: -0.04em; }
+  .brand__mark { width: 27px; height: 27px; font-size: 0.72rem; }
+  .site-header__inner { gap: 0.75rem; }
+}
+
+// Shrink the wordmark rather than truncating it -- an ellipsised name reads
+// as broken, and the full name still fits at this size.
+@media (max-width: 420px) {
+  .brand { font-size: 0.84rem; gap: 0.5rem; }
+  .site-header__inner { padding-inline: 1rem; }
+}
+
+// Drawer-only contact action (the header CTA is hidden at this width).
+.site-nav__cta { display: none; }
+
+@media (max-width: 880px) {
+  .site-nav.is-open .site-nav__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1.25rem;
+    padding: 0.9rem 1.2rem;
+    border: 0;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--bg) !important;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none !important;
+  }
+}
+
+// --------------------------------------------------------------------------
+//  20. Author card below the two-column breakpoint
+//  It spans the full width there, so lay it out horizontally instead of
+//  keeping the tall, narrow sidebar shape. Note author-profile.html wraps
+//  everything in a microdata <div>, so that wrapper is the grid container.
+// --------------------------------------------------------------------------
+
+@media (max-width: 1000px) {
+  .sidebar.sticky { position: static; }
+
+  .sidebar > div[itemscope] {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 1.1rem;
+    align-items: center;
+  }
+
+  .sidebar .author__avatar {
+    float: none;
+    display: block;
+    grid-column: 1;
+    grid-row: 1;
+    margin-bottom: 0;
+
+    img { width: 60px; height: 60px; max-width: 60px; }
+  }
+
+  .sidebar .author__content {
+    float: none;
+    display: block;
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .sidebar .author__name { margin-bottom: 0.15rem; }
+  .sidebar .author__bio { margin-bottom: 0; }
+
+  .sidebar .author__urls-wrapper {
+    float: none;
+    display: block;
+    grid-column: 1 / -1;
+    grid-row: 2;
+
+    .author__urls {
+      display: flex !important;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.4rem;
+      margin-top: 1rem;
+
+      li { margin-bottom: 0; }
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+//  21. Social icon colour
+//  The theme hardcodes brand colours per network (GitHub's is near-black,
+//  which disappears on a dark background). Monochrome reads better in both
+//  themes and keeps the card calm.
+// --------------------------------------------------------------------------
+
+.sidebar .social-icons i,
+.sidebar .social-icons .svg-inline--fa {
+  color: var(--ink-3);
+}
+
+.sidebar .social-icons a:hover i,
+.sidebar .social-icons a:hover .svg-inline--fa {
+  color: var(--accent);
+}
+
+.site-footer__list a i,
+.site-footer__list a .svg-inline--fa {
+  color: inherit;
+}
+
+// --------------------------------------------------------------------------
+//  22. Remove the theme's code-block corner glyph
+//  _syntax.scss stamps a :before on div.highlighter-rouge using
+//  font-family "fontawesome", a name Font Awesome 5 no longer registers, so
+//  it paints as an empty light-grey square in the corner of every code block.
+// --------------------------------------------------------------------------
+
+.page__content div.highlighter-rouge::before,
+div.highlighter-rouge::before {
+  content: none;
+}
