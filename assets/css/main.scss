@@ -93,3 +93,29 @@ body { background:var(--paper); color:var(--ink); }
 .cv-entry__meta { margin:0 0 .45rem !important; }
 .skill-list { color:var(--muted-ink); line-height:1.8; }
 @media (max-width:800px) { .hero { grid-template-columns:1fr; gap:2.5rem; min-height:auto; padding:4.5rem 1.5rem; } .hero__portrait-wrap { justify-self:start; width:220px; } .signal-grid,.section-heading,.research-panel { grid-template-columns:1fr; gap:1.5rem; } .signal-grid { margin-bottom:4rem; } .signal-card { min-height:0; } .signal-card__number { margin-bottom:1.5rem; } .timeline__item { grid-template-columns:1fr; gap:.5rem; } .research-panel { padding:2rem 1.5rem; } .contact-band { padding:4rem 1.5rem; } }
+
+/* Full-bleed portfolio composition */
+.portfolio-body { background:var(--paper); }
+.portfolio-body .masthead { position:sticky; top:0; z-index:20; }
+.portfolio-body .masthead__inner-wrap { max-width:1280px; }
+.portfolio-body .masthead__menu-item--lg a { color:var(--deep); font-weight:800; letter-spacing:-.025em; }
+.portfolio-page { overflow:hidden; }
+.portfolio-page .hero { min-height:calc(100vh - 74px); margin:0; padding-left:max(2rem,calc((100vw - 1240px)/2)); padding-right:max(2rem,calc((100vw - 1240px)/2)); }
+.portfolio-page .hero:after { content:"AI / DATA / SYSTEMS"; position:absolute; left:max(2rem,calc((100vw - 1240px)/2)); bottom:1.6rem; color:rgba(255,255,255,.28); font-family:monospace; font-size:.68rem; font-weight:700; letter-spacing:.15em; }
+.portfolio-page .signal-grid,.portfolio-page .section-block,.portfolio-page .research-panel { width:min(1120px,calc(100% - 3rem)); margin-left:auto; margin-right:auto; }
+.portfolio-page .signal-grid { margin-top:5.5rem; }
+.portfolio-page .section-block { margin-top:7rem; }
+.portfolio-page .research-panel { margin-top:7rem; }
+.portfolio-page .contact-band { margin:7rem 0 0; padding-left:max(2rem,calc((100vw - 1240px)/2)); padding-right:max(2rem,calc((100vw - 1240px)/2)); }
+.portfolio-page .signal-card { position:relative; overflow:hidden; transition:transform .25s ease, background .25s ease; }
+.portfolio-page .signal-card:after { content:""; position:absolute; width:88px; height:88px; right:-38px; bottom:-42px; border:1px solid #aebbf0; border-radius:50%; transition:transform .3s ease; }
+.portfolio-page .signal-card:hover { background:#eef2ff; transform:translateY(-5px); }
+.portfolio-page .signal-card:hover:after { transform:scale(1.45); }
+.portfolio-page .timeline__item { transition:padding-left .2s ease; }
+.portfolio-page .timeline__item:hover { padding-left:.75rem; }
+.portfolio-page .timeline__item:hover h3 { color:var(--blue); }
+.portfolio-page .hero__portrait { box-shadow:20px 24px 0 rgba(201,244,92,.13); }
+.portfolio-page .contact-band { position:relative; overflow:hidden; }
+.portfolio-page .contact-band:after { content:"M"; position:absolute; right:5vw; bottom:-.34em; color:rgba(255,255,255,.08); font-family:Georgia,serif; font-size:18rem; font-weight:700; line-height:1; }
+.portfolio-page .contact-band > * { position:relative; z-index:1; }
+@media (max-width:800px) { .portfolio-page .hero { min-height:auto; } .portfolio-page .signal-grid { margin-top:3rem; } .portfolio-page .section-block,.portfolio-page .research-panel { margin-top:4.5rem; } .portfolio-page .contact-band { margin-top:4.5rem; } .portfolio-page .contact-band:after { right:-.15em; font-size:12rem; } }

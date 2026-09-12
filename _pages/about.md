@@ -1,5 +1,6 @@
 ---
 permalink: /
+layout: portfolio
 title: "Mehdi Hosseini Moghadam"
 excerpt: "AI Specialist and Data Scientist"
 author_profile: false
